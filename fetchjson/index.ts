@@ -2,6 +2,7 @@ import axios from 'axios';
 const url = 'http://jsonplaceholder.typicode.com/todos/1';
 
 // What kind of object will response.data return?
+// Defines Todo type
 interface Todo {
   id: number;
   title: string;
