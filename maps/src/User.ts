@@ -7,6 +7,8 @@ export class User {
     lng: number;
   };
 
+  // constructors are usually at the top, right after
+  // any listed properties
   constructor() {
     // generate random info using faker
     this.name = faker.name.firstName();
@@ -15,5 +17,9 @@ export class User {
       lat: parseFloat(faker.address.latitude()), // return a number to match definition above
       lng: parseFloat(faker.address.longitude())
     };
+  }
+
+  markerContent(): string {
+    return `User name: ${this.name}`;
   }
 }

@@ -85113,6 +85113,8 @@ var faker_1 = __importDefault(require("faker"));
 var User =
 /** @class */
 function () {
+  // constructors are usually at the top, right after
+  // any listed properties
   function User() {
     // generate random info using faker
     this.name = faker_1.default.name.firstName(); // this.location.lat -- this is undefined!
@@ -85122,6 +85124,10 @@ function () {
       lng: parseFloat(faker_1.default.address.longitude())
     };
   }
+
+  User.prototype.markerContent = function () {
+    return "User name: " + this.name;
+  };
 
   return User;
 }();
@@ -85155,6 +85161,10 @@ function () {
     };
   }
 
+  Company.prototype.markerContent = function () {
+    return "\n    Company name: " + this.companyName + "\n    <br/><em>" + this.catchPhrase + "</em>\n    ";
+  };
+
   return Company;
 }();
 
@@ -85183,12 +85193,23 @@ function () {
 
 
   CustomMap.prototype.addMarker = function (mappable) {
-    new google.maps.Marker({
+    var _this = this;
+
+    var marker = new google.maps.Marker({
       map: this.googleMap,
       position: {
         lat: mappable.location.lat,
         lng: mappable.location.lng
       }
+    }); // add event listener for info box
+    // https://developers.google.com/maps/documentation/javascript/infowindows
+
+    marker.addListener('click', function () {
+      // but we won't create it until the marker is clicked
+      var infowindow = new google.maps.InfoWindow({
+        content: mappable.markerContent()
+      });
+      infowindow.open(_this.googleMap, marker);
     });
   };
 
@@ -85248,7 +85269,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51807" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52828" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

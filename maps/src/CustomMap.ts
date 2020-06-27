@@ -10,6 +10,7 @@ interface Mappable {
     lat: number;
     lng: number;
   };
+  markerContent(): string;
 }
 // Ideal things we can do with the map in index.ts
 export class CustomMap {
@@ -28,12 +29,21 @@ export class CustomMap {
   // addMarker(mappable: User | Company): void {
   // Instead of maintaing list types, we can use the Mappable type
   addMarker(mappable: Mappable): void {
-    new google.maps.Marker({
+    const marker = new google.maps.Marker({
       map: this.googleMap,
       position: {
         lat: mappable.location.lat,
         lng: mappable.location.lng
       }
+    });
+    // add event listener for info box
+    // https://developers.google.com/maps/documentation/javascript/infowindows
+    marker.addListener('click', () => {
+      // but we won't create it until the marker is clicked
+      const infowindow = new google.maps.InfoWindow({
+        content: mappable.markerContent()
+      });
+      infowindow.open(this.googleMap, marker);
     });
   }
 }
