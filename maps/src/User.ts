@@ -1,6 +1,10 @@
 import faker from 'faker';
+import { Mappable } from './CustomMap';
 
-export class User {
+// Since we export Mappable, we can use implements
+// (not extends!) Mappable to help id errors
+// Not required, but helpful :)
+export class User implements Mappable {
   name: string;
   location: {
     lat: number;

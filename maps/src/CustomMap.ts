@@ -5,7 +5,9 @@
  with lat (number) and lng (number)
  To document this: use an Interface!
 */
-interface Mappable {
+// by adding export, we can use this to help with error checking in User
+// and Company classees
+export interface Mappable {
   location: {
     lat: number;
     lng: number;
